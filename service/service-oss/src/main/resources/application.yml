@@ -1,0 +1,36 @@
+server:
+  port: 8205
+
+spring:
+  application:
+    name: service-oss
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      server-addr: 192.168.91.128:8848
+  redis:
+    host: 192.168.91.128
+    password: 123456
+
+aliyun:
+  oss:
+    endpoint: oss-accelerate.aliyuncs.com
+    accessKeyId: LTAI5tGJ3yGFbfkVuXLiUPvD
+    secret: CDHFt9a1kMmOB42m9ke8nP3Xq8e5lA
+    bucket: yygh-jodie
+
+
+
+#  data:
+#    mongodb:
+##      注意这种方式不能连接, 坑死--------------------------死坑死坑,mongo设置了也不需要配置用户名密码
+#                         yml格式不合适换成properties
+#      host: 192.168.91.128
+#      port: 27017
+##      database: yygh_hosps #指定操作的数据库
+#      username: root
+#      password: 123455
+#      authentication-database: admin
+#      uri: mongodb://admin:admin@192.168.91.128:27017

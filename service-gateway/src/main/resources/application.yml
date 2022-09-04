@@ -1,0 +1,47 @@
+server:
+  port: 80
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    nacos:
+      server-addr: 192.168.91.128:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: service-hosp            # 路由的唯一标识
+          uri: lb://service-hosp  # 如果断言成功，将要转发去的地址
+          predicates:                 # 断言，满足所有断言，才会进行转发
+            - Path=/*/hosp/**        # 注意：这是使用= 不是：
+
+        - id: service-cmn
+          uri: lb://service-cmn
+          predicates:
+            - Path=/*/cmn/**
+
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/*/user/**
+
+        - id: service-msm
+          uri: lb://service-msm
+          predicates:
+            - Path=/*/msm/**
+
+        - id: service-ucenter
+          uri: lb://service-user
+          predicates:
+            - Path=/*/ucenter/**
+
+        - id: service-oss
+          uri: lb://service-oss
+          predicates:
+            - Path=/*/oss/**
+
+        - id: service-order
+          uri: lb://service-order
+          predicates:
+            - Path=/*/order/**
