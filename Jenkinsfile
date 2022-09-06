@@ -20,6 +20,7 @@ node {
     stage('pull code') {
         checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
         echo "pull code Successful....."
+        echo "pull code Successful....."
     }
 
 
