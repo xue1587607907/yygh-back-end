@@ -10,5 +10,5 @@ public interface MsmService {
     boolean send(String phone, String code) throws ExecutionException, InterruptedException;
 
 //    mq使用发送短信
-    boolean send(MsmVo msmVo);
+//     boolean send(MsmVo msmVo);
 }
