@@ -22,44 +22,43 @@ node {
     }
 
 
-//    stage('编译，打包微服务工程，上传镜像') {
-//        for (int i = 0; selectedProjectNames.length > i; i++) {
-//            //service-gateway@8210
-//            def projectInfo = selectedProjectNames[i];
-//            //当前遍历的项目名称
-//            def currentProjectName = "${projectInfo}".split("@")[0]
-//            //当前遍历的项目端口
-//            def currentProjectPort = "${projectInfo}".split("@")[1]
-//
-//            // 打包工程
-//            sh "mvn -f ${currentProjectName} clean package -Dmaven.test.skip=true"
-//
-//            if ($ { currentProjectName }.equals("service-gateway") || $ { currentProjectName }.equals("hospital-manage")) {
-//                sh "mvn dockerfile:build"
-//            } else {
-//                sh "cd service"
-//                sh "mvn dockerfile:build"
-//            }
-////            sh "mvn -f ${currentProjectName} clean package dockerfile:build"
-//
-//            //定义镜像名称
-//            def imageName = "${currentProjectName}:${tag}"
-//
-//            //对镜像打上标签
-//            sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
-//
-//            //把镜像推送到Harbor
-//            withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
-//
-//                //登录到Harbor
-//                sh "docker login -u ${username} -p ${password} ${harbor_url}"
-//
-//                //镜像上传
-//                sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
-//
-//                sh "echo 镜像上传成功"
-//            }
-//
+    stage('编译，打包微服务工程，上传镜像') {
+        for (int i = 0; selectedProjectNames.length > i; i++) {
+            //service-gateway@8210
+            def projectInfo = selectedProjectNames[i];
+            //当前遍历的项目名称
+            def currentProjectName = "${projectInfo}".split("@")[0]
+            //当前遍历的项目端口
+            def currentProjectPort = "${projectInfo}".split("@")[1]
+
+            // 打包工程
+            sh "mvn -f ${currentProjectName} clean package -Dmaven.test.skip=true"
+
+            if ($ { currentProjectName }.equals("service-gateway") || $ { currentProjectName }.equals("hospital-manage")) {
+                sh "mvn dockerfile:build"
+            } else {
+                sh "cd service"
+                sh "mvn dockerfile:build"
+            }
+
+            //定义镜像名称
+            def imageName = "${currentProjectName}:${tag}"
+
+            //对镜像打上标签
+            sh "docker tag ${imageName} ${harbor_url}/${harbor_project}/${imageName}"
+
+            //把镜像推送到Harbor
+            withCredentials([usernamePassword(credentialsId: "${harbor_auth}", passwordVariable: 'password', usernameVariable: 'username')]) {
+
+                //登录到Harbor
+                sh "docker login -u ${username} -p ${password} ${harbor_url}"
+
+                //镜像上传
+                sh "docker push ${harbor_url}/${harbor_project}/${imageName}"
+
+                sh "echo 镜像上传成功"
+            }
+
 //            //部署应用
 ////            sshPublisher(publishers: [sshPublisherDesc(configName: "${currentServerName}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "/opt/jenkins_shell/deploy.sh $harbor_url $harbor_project $currentProjectName $tag $currentProjectPort ", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 //
@@ -109,5 +108,6 @@ node {
 //        }
 //
 //
-//    }
+        }
+    }
 }
