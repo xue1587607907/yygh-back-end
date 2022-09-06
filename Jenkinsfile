@@ -1,4 +1,4 @@
-def git_auth = "68f2087f-a034-4d39-a9ff-1f776dd3dfa8"
+def git_auth = "60259b37-7710-4d31-b925-b83c0136bf28"
 def remote_uri = "https://github.com/xue1587607907/yygh-back-end.git"
 node {
     stage('pull code') {
