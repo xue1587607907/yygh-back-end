@@ -1,0 +1,26 @@
+def git_auth = "60259b37-7710-4d31-b925-b83c0136bf28"
+def remote_url = "https://github.com/xue1587607907/yygh-back-end.git"
+def tag = "latest"
+
+
+node {
+    stage('pull code') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/${branch}']], extensions: [[$class: 'CloneOption', noTags: false, timeout: 30]], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${remote_url}"]]])
+
+//         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [[$class: 'CloneOption', noTags: false, timeout: 30]], userRemoteConfigs: [[credentialsId: '60259b37-7710-4d31-b925-b83c0136bf28', url: 'https://github.com/xue1587607907/yygh-back-end.git']]])
+
+        echo 'pull Successful....'
+
+    }
+
+    stage('build code and build image') {
+        //定义镜像名称
+        def imageName = "${project_name}:${tag}"
+
+        sh 'mvn clean package -Dmaven.test.skip=true dockerfile:build'
+        echo 'build Successful.....'
+
+
+
+    }
+}
