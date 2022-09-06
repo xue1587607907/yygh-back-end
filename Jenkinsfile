@@ -9,4 +9,9 @@ node {
         echo 'pull Successful....'
         
         }
+    
+    stage('build code') {
+                sh 'mvn clean package -Dmaven.test.skip=true'
+                echo 'build Successful.....'
+        }
 }
