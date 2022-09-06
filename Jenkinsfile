@@ -14,8 +14,6 @@ def harbor_auth = "906109fc-6885-4b34-a493-db0062fce31d"
 node {
     //获取当前选择的项目名称
     def selectedProjectNames = "${project_name}".split(",")
-    //获取当前选择的服务器名称
-    def selectedServers = "${publish_server}".split(",")
 
     stage('pull code') {
         checkout([$class: 'GitSCM', branches: [[name: "*/${branch}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_url}"]]])
